@@ -1,4 +1,4 @@
-# First stage: JDK 11 with modules required for Spring Boot
+# First stage: JDK 11 
 FROM debian:stretch-slim as packager
 
 # source JDK distribution names
