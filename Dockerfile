@@ -84,15 +84,3 @@ RUN echo "# Installing Maven " && echo ${MAVEN_VERSION} && \
 
 VOLUME /var/lib/maven
 
-# Node related
-# ------------
-
-RUN echo "# Installing Nodejs" && \
-    curl -sL https://deb.nodesource.com/setup_4.x | bash - && \
-    apt-get install nodejs build-essential -y && \
-    npm set strict-ssl false && \
-    npm install -g npm@latest && \
-    npm install -g bower grunt grunt-cli && \
-    npm cache clear -f && \
-    npm install -g n && \
-    n stable
