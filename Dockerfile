@@ -4,7 +4,7 @@ MAINTAINER James Dunnam "jamesd1184@gmail.com"
 
 ENV MAVEN_VERSION 3.5.0
 
-RUN echo deb http://archive.ubuntu.com/ubuntu precise universe > /etc/apt/sources.list.d/universe.list
+RUN echo deb http://us.archive.ubuntu.com/ubuntu/ precise main restricted universe multiverse
 RUN apt-get update && apt-get install -y wget git curl zip monit openssh-server git iptables ca-certificates daemon net-tools libfontconfig-dev
 
 #Install Oracle JDK 11
