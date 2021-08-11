@@ -1,8 +1,11 @@
-FROM ubuntu:18.04
+FROM docker.io/clefos:latest
 
 MAINTAINER James Dunnam "jamesd1184@gmail.com"
 
 ENV MAVEN_VERSION 3.5.0
+
+RUN yum update --setopt=tsflags=nodocs -y && \
+    yum install --setopt=tsflags=nodocs -y tar
 
 RUN echo deb http://us.archive.ubuntu.com/ubuntu/ precise main restricted universe multiverse
 RUN apt-get update && apt-get install -y wget git curl zip monit openssh-server git iptables ca-certificates daemon net-tools libfontconfig-dev
