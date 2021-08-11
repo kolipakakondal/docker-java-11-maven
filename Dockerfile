@@ -9,15 +9,16 @@ RUN apt-get update && apt-get install -y wget git curl zip monit openssh-server 
 
 #Install Oracle JDK 11
 #--------------------
-RUN apt-get update && \
-    apt-get install -y software-properties-common zip && \
-    add-apt-repository ppa:linuxuprising/java && \
-    apt-get update && \
-    echo oracle-java11-installer shared/accepted-oracle-license-v1-2 select true | debconf-set-selections && \
-    apt-get install -y oracle-java11-installer-local && \
-    rm -rf /var/lib/apt/lists/* && \
-    rm -rf /var/cache/oracle-java11-installer-local
-ENV JAVA_HOME /usr/lib/jvm/java-11-oracle
+RUN 	curl -s -L 'https://api.adoptopenjdk.net/v2/binary/releases/openjdk11?openjdk_impl=openj9&os=linux&arch=s390x&release=latest&type=jdk' -o /tmp/openjdk.tar.gz && \
+		mkdir -p /usr/lib/jvm/java-11-openjdk && \
+		tar -C /usr/lib/jvm/java-11-openjdk -xzf /tmp/openjdk.tar.gz --strip-components=1 && \
+		ln -sf /usr/lib/jvm/java-11-openjdk /usr/lib/jvm/java && \
+		rm -f /tmp/openjdk.tar.gz && \
+		yum clean all && \ 
+		rm -rf /var/cache/yum/* /tmp/* /var/log/yum.log
+
+ENV		JAVA_HOME=/usr/lib/jvm/java
+ENV		PATH=$PATH:$JAVA_HOME/bin
 
 # Maven related
 # -------------
