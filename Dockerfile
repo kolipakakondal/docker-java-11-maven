@@ -1,4 +1,4 @@
-FROM ubuntu:14.04
+FROM ubuntu:18.04
 
 MAINTAINER James Dunnam "jamesd1184@gmail.com"
 
@@ -9,12 +9,16 @@ RUN apt-get update && apt-get install -y wget git curl zip monit openssh-server 
 
 #Install Oracle JDK 11
 #--------------------
-RUN echo "# Installing Oracle JDK 11" && \
-    sudo apt-get install -y software-properties-common debconf-utils && \
-    sudo add-apt-repository -y ppa:webupd8team/java && \
-    sudo apt-get update && \
-    echo "oracle-java11-installer-local shared/accepted-oracle-license-v1-2 select true" | sudo debconf-set-selections && \
-    sudo apt-get install -y oracle-java11-installer-local
+RUN apt-get update && \
+    apt-get install -y software-properties-common zip && \
+    add-apt-repository ppa:linuxuprising/java && \
+    apt-get update && \
+    echo oracle-java11-installer shared/accepted-oracle-license-v1-2 select true | debconf-set-selections && \
+    apt-get install -y oracle-java11-installer-local && \
+    rm -rf /var/lib/apt/lists/* && \
+    rm -rf /var/cache/oracle-java11-installer-local
+ENV JAVA_HOME /usr/lib/jvm/java-11-oracle
+
 # Maven related
 # -------------
 ENV MAVEN_ROOT /var/lib/maven
